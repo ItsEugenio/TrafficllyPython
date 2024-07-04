@@ -14,12 +14,13 @@ def get_max_traffic_day(data: TrafficData):
     if len(data.week1) != 7 or len(data.week2) != 7:
         return {"error": "Cada semana debe tener exactamente 7 días."}
     
-    # Calcular el promedio de tráfico para cada día
+    print(data);
+
     average_traffic = [(data.week1[i] + data.week2[i]) / 2 for i in range(7)]
     
     # Encontrar el día con el mayor promedio de tráfico
     max_traffic_day_index = average_traffic.index(max(average_traffic))
-    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    days_of_week = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
     
     return {"day": days_of_week[max_traffic_day_index], "average_traffic": average_traffic[max_traffic_day_index]}
 
