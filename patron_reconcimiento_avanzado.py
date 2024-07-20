@@ -8,9 +8,8 @@ import requests
 from datetime import datetime, timedelta
 
 sio = socketio.Client()
-sio.connect('http://localhost:5000')
+sio.connect('https://websockettrafficlly.zapto.org')
 
-# Modelo YOLOv5
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 model.eval()
 
@@ -20,9 +19,9 @@ current_hour = datetime.now().replace(minute=0, second=0, microsecond=0)
 
 RETENTION_TIME = 2
 
-IOU_THRESHOLD = 0.005  
+IOU_THRESHOLD = 0.005 
 
-POST_ENDPOINT = 'http://localhost:4000/registro'
+POST_ENDPOINT = 'https://trafficllymain.zapto.org/registro'
 
 def calculate_iou(box1, box2):
     x1, y1, x2, y2 = box1
@@ -60,7 +59,7 @@ def detect_persons(frame):
         current_persons[person_id] = current_time
         
         if not found:
-            sio.emit('personasDentro', 12345)
+            sio.emit('personasFuera', 12345)
             hourly_count[current_hour] = hourly_count.get(current_hour, 0) + 1
     
     keys_to_remove = [k for k, v in detected_persons.items() if (current_time - v) > RETENTION_TIME]
